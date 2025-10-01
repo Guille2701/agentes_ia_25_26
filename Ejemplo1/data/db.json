@@ -1,0 +1,168 @@
+{
+  "libros": [
+    {
+      "id": "3",
+      "titulo": "Eloquent JavaScript, Third Edition",
+      "autor": "Marijn Haverbeke",
+      "año": 2018,
+      "genero": "JavaScript",
+      "precio": 28,
+      "paginas": 472,
+      "isbn": "978-1593279509",
+      "descripcion": "Un libro completo para aprender JavaScript desde cero."
+    },
+    {
+      "id": "4",
+      "titulo": "Python Crash Course, 3rd Edition: A Hands-On, Project-Based Introduction to Programming",
+      "autor": "Eric Matthes",
+      "año": 2022,
+      "genero": "Python",
+      "precio": 32.99,
+      "paginas": 568,
+      "isbn": "978-1718502703",
+      "descripcion": "Una introducción práctica a Python con proyectos."
+    },
+    {
+      "id": "5",
+      "titulo": "Cracking the Coding Interview: 189 Programming Questions and Solutions",
+      "autor": "Gayle Laakmann McDowell",
+      "año": 2015,
+      "genero": "Programación",
+      "precio": 39.99,
+      "paginas": 706,
+      "isbn": "978-0984782857",
+      "descripcion": "Guía para prepararse para entrevistas técnicas de programación."
+    },
+    {
+      "id": "6",
+      "titulo": "Design Patterns: Elements of Reusable Object-Oriented Software",
+      "autor": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+      "año": 1994,
+      "genero": "Programación",
+      "precio": 45,
+      "paginas": 395,
+      "isbn": "978-0201633610",
+      "descripcion": "El libro clásico sobre patrones de diseño."
+    },
+    {
+      "id": "7",
+      "titulo": "Head First Java, 2nd Edition",
+      "autor": "Kathy Sierra, Bert Bates",
+      "año": 2005,
+      "genero": "Java",
+      "precio": 37.99,
+      "paginas": 688,
+      "isbn": "978-0596009205",
+      "descripcion": "Una forma visual y práctica de aprender Java."
+    },
+    {
+      "id": "8",
+      "titulo": "Effective Java, 3rd Edition",
+      "autor": "Joshua Bloch",
+      "año": 2017,
+      "genero": "Java",
+      "precio": 48,
+      "paginas": 416,
+      "isbn": "978-0134685991",
+      "descripcion": "Consejos para escribir código Java efectivo."
+    },
+    {
+      "id": "9",
+      "titulo": "JavaScript and JQuery: Interactive Front-End Web Development",
+      "autor": "Jon Duckett",
+      "año": 2014,
+      "genero": "JavaScript",
+      "precio": 38.99,
+      "paginas": 688,
+      "isbn": "978-1118531648",
+      "descripcion": "Una guía completa para el desarrollo web front-end con JavaScript y JQuery."
+    },
+    {
+      "id": "10",
+      "titulo": "Automate the Boring Stuff with Python, 2nd Edition",
+      "autor": "Al Sweigart",
+      "año": 2019,
+      "genero": "Python",
+      "precio": 29.99,
+      "paginas": 592,
+      "isbn": "978-1593279929",
+      "descripcion": "Aprende a automatizar tareas con Python."
+    }
+  ],
+  "autores": [
+    {
+      "id": "1",
+      "nombre": "Guillermo Bazan Diaz"
+    },
+    {
+      "id": "2",
+      "nombre": "Andrew Hunt, David Thomas"
+    },
+    {
+      "id": "3",
+      "nombre": "Marijn Haverbeke"
+    },
+    {
+      "id": "4",
+      "nombre": "Eric Matthes"
+    },
+    {
+      "id": "5",
+      "nombre": "Gayle Laakmann McDowell"
+    },
+    {
+      "id": "6",
+      "nombre": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"
+    },
+    {
+      "id": "7",
+      "nombre": "Kathy Sierra, Bert Bates"
+    },
+    {
+      "id": "8",
+      "nombre": "Joshua Bloch"
+    },
+    {
+      "id": "9",
+      "nombre": "Jon Duckett"
+    },
+    {
+      "id": "10",
+      "nombre": "Al Sweigart"
+    }
+  ],
+  "generos": [
+    {
+      "id": "1",
+      "nombre": "Ricardo Fernandez"
+    },
+    {
+      "id": "2",
+      "nombre": "JavaScript"
+    },
+    {
+      "id": "4",
+      "nombre": "Java"
+    },
+    {
+      "id": 5,
+      "nombre": "PHP"
+    },
+    {
+      "id": "6",
+      "nombre": "php Actualizado"
+    },
+    {
+      "id": "6",
+      "nombre": "php Actualizado"
+    },
+    {
+      "id": "6",
+      "nombre": "php Actualizado"
+    },
+    {
+      "id": "6",
+      "nombre": "php Actualizado"
+    }
+  ]
+}
