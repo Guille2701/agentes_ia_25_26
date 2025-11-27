@@ -2,38 +2,38 @@
 
 ## Backend:
 
-- [] hacer db.js (Mateo.js)
-- [] hacer prompts.js (Guille)
-- [] hacer services.js (Guille)
-- [] hacer routes.js (Mateo)
-- [] hacer server.js (Mateo)
+- [x] hacer db.js (Mateo.js)
+- [x] hacer prompts.js (Guille)
+- [ ] hacer services.js (Guille)
+- [ ] hacer routes.js (Mateo)
+- [ ] hacer server.js (Mateo)
 
 ## Frontend:
-- [] hacer index.html (Guille)
-- [] hacer style.css (Guille)
-- [] hacer main.js (Mateo)
+- [ ] hacer index.html (Guille)
+- [ ] hacer style.css (Guille)
+- [ ] hacer main.js (Mateo)
 
 ## Misc: 
-- [] hacer validacion.http (Mateo)
-- [] hacer docker-compose.yml (Guille)
+- [ ] hacer validacion.http (Mateo)
+- [ ] hacer docker-compose.yml (Guille)
 
 ## Pruebas manuales:
-- [] Backend levanta sin errores
-- [] Ollama responde en http://localhost:11434
-- [] Frontend carga en http://localhost:3000
-- [] Selector de temas funciona
-- [] Generar preguntas tema1 funciona
-- [] Generar preguntas tema2 funciona
-- [] Generar preguntas tema3 funciona
-- [] Generar preguntas tema4 funciona
-- [] Las preguntas se guardan en BD
-- [] Las preguntas se muestran en frontend
-- [] Eliminar pregunta funciona
-- [] Limpiar tema funciona
-- [] Validaciones: bloquea numPreguntas fuera de rango
-- [] Validaciones: bloquea envío sin tema
-- [] Mensaje de error si Ollama no responde
-- [] Indicador de carga se muestra/oculta correctamente
+- [ ] Backend levanta sin errores
+- [ ] Ollama responde en http://localhost:11434
+- [ ] Frontend carga en http://localhost:3000
+- [ ] Selector de temas funciona
+- [ ] Generar preguntas tema1 funciona
+- [ ] Generar preguntas tema2 funciona
+- [ ] Generar preguntas tema3 funciona
+- [ ] Generar preguntas tema4 funciona
+- [ ] Las preguntas se guardan en BD
+- [ ] Las preguntas se muestran en frontend
+- [ ] Eliminar pregunta funciona
+- [ ] Limpiar tema funciona
+- [ ] Validaciones: bloquea numPreguntas fuera de rango
+- [ ] Validaciones: bloquea envío sin tema
+- [ ] Mensaje de error si Ollama no responde
+- [ ] Indicador de carga se muestra/oculta correctamente
 
 ## Documentación:
-- [] Realizado el README.md (Guille/Mateo)
+- [ ] Realizado el README.md (Guille/Mateo)
