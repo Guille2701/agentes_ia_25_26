@@ -5,8 +5,8 @@
 - [x] hacer db.js (Mateo.js)
 - [x] hacer prompts.js (Guille)
 - [ ] hacer services.js (Guille)
-- [ ] hacer routes.js (Mateo)
-- [ ] hacer server.js (Mateo)
+- [x] hacer routes.js (Mateo)
+- [x] hacer server.js (Mateo)
 
 ## Frontend:
 - [ ] hacer index.html (Guille)
