@@ -4,7 +4,7 @@
 
 - [x] hacer db.js (Mateo.js)
 - [x] hacer prompts.js (Guille)
-- [ ] hacer services.js (Guille)
+- [x] hacer services.js (Guille)
 - [x] hacer routes.js (Mateo)
 - [x] hacer server.js (Mateo)
 

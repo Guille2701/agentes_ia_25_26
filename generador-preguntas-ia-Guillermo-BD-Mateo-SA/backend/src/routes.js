@@ -1,14 +1,6 @@
 // backend/routes.js
 import { Router } from "express";
-import {
-  generarPreguntas,
-  obtenerPreguntas,
-  obtenerPreguntaPorId,
-  eliminarPregunta,
-  limpiarTema,
-  getTemas,
-  healthCheck
-} from "./services.js";
+import services from "./services.js";
 
 const router = Router();
 
@@ -21,7 +13,7 @@ router.post("/generate", async (req, res) => {
       return res.status(400).json({ success: false, error: "Datos incompletos." });
     }
 
-    const preguntas = await generarPreguntas(tema, numPreguntas, subtema);
+    const preguntas = await services().generarPreguntas(tema, numPreguntas, subtema);
 
     res.json({ success: true, preguntas });
   } catch (err) {
@@ -32,7 +24,7 @@ router.post("/generate", async (req, res) => {
 // GET /api/preguntas
 router.get("/preguntas", async (req, res) => {
   const { tema } = req.query;
-  const preguntas = obtenerPreguntas(tema);
+  const preguntas = services().obtenerPreguntas(tema);
   res.json(preguntas);
 });
 
@@ -46,13 +38,13 @@ router.get("/preguntas/:id", (req, res) => {
 
 // DELETE /api/preguntas/:id
 router.delete("/preguntas/:id", (req, res) => {
-  eliminarPregunta(req.params.id);
+  services().eliminarPregunta(req.params.id);
   res.json({ success: true, mensaje: "Eliminada" });
 });
 
 // DELETE /api/preguntas/tema/:tema
 router.delete("/preguntas/tema/:tema", (req, res) => {
-  const count = limpiarTema(req.params.tema);
+  const count = services().limpiarTema(req.params.tema);
   res.json({ success: true, eliminadas: count });
 });
 

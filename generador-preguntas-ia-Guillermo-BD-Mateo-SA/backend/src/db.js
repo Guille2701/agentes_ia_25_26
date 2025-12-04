@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
 
-const db = new Database('./backend/src/db/preguntas.db');
+const db = new Database('.//src/db/preguntas.db');
 db.pragma('journal_mode = WAL');
 
 // Crear tabla si no existe

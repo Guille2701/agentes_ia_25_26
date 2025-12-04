@@ -33,7 +33,7 @@ export default function services(){
                 throw error;
             });
         }
-/*
+
         fetchFromOllama(prompt).then(data => {
             const stmt = db.prepare(`
                     INSERT INTO preguntas (nombre, descripcion, preguntas, opciones, correcta)
@@ -46,20 +46,52 @@ export default function services(){
                     data.opciones,
                     data.correcta
                 );
-        });*/
+        });
 
-        return fetchFromOllama(prompt).then(data => data.response);
+        return fetchFromOllama(prompt).then(data => data.response.replace("/^```", "").replace("/```", "").trim());
+    }
+
+
+    function obtenerPreguntas(tema){
+        const stmt = db.prepare(`SELECT * FROM preguntas WHERE nombre = ?`);
+        const arrayPreguntas = stmt.all(tema);
+
+        if(!arrayPreguntas){
+            return []
+        }
+
+        return arrayPreguntas
+    }
+
+    function eliminarPregunta(idPregunta){
+        const stmt = db.prepare(`DELETE FROM preguntas WHERE id= ?`);
+        const result = stmt.run(idPregunta);
+
+        if(result.changes===0){
+            return false
+        }
+
+        return true
+    }
+
+    function limpiarTema(tema){
+        const stmt = db.prepare(`DELETE FROM preguntas WHERE nombre=?`);
+        const result = stmt.run(tema);
+        return result.changes;
+    }
+
+    function verDb(){
+        const stmt = db.prepare(`SELECT * FROM preguntas`);
+        const result = stmt.all();
+
+        return result;
     }
 
     return {
-        generarPreguntas
+        generarPreguntas,
+        obtenerPreguntas,
+        eliminarPregunta,
+        limpiarTema,
+        verDb
     };
 }
-
-
-async function test() {
-    const prueba = await services().generarPreguntas('typescript', 3, 4, 'generics');
-    console.log(prueba);
-}
-
-test();
