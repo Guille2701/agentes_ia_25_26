@@ -9,8 +9,8 @@
 - [x] hacer server.js (Mateo)
 
 ## Frontend:
-- [ ] hacer index.html (Guille)
-- [ ] hacer style.css (Guille)
+- [x] hacer index.html (Guille)
+- [x] hacer style.css (Guille)
 - [ ] hacer main.js (Mateo)
 
 ## Misc: 

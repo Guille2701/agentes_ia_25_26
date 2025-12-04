@@ -1,0 +1,14 @@
+# ETAPA DEL FRONTEND (Web Estática sin compilación)
+
+# Usa una imagen de Nginx ultraligera, ideal para servir archivos estáticos.
+FROM nginx:alpine
+
+# Copia *todos* los archivos del directorio 'frontend' 
+# (index.html, style.css, main.js, etc.) 
+# al directorio donde Nginx busca los archivos web por defecto.
+COPY . /usr/share/nginx/html
+
+# Nginx sirve por defecto en el puerto 80.
+EXPOSE 80
+
+# Nginx ya tiene su comando de inicio por defecto, no se necesita CMD.

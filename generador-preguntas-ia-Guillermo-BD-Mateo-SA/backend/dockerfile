@@ -1,0 +1,31 @@
+# ETAPA 1: Construcción de la imagen del Backend (Node.js)
+
+# Usa una imagen base de Node.js ligera para la aplicación.
+# Se recomienda usar una versión LTS (Long-Term Support) como 20-slim.
+FROM node:20-slim
+
+# Etiqueta para mantener el código en orden (opcional, pero útil)
+LABEL stage=backend-prod
+
+# Crea y establece el directorio de trabajo dentro del contenedor.
+WORKDIR /usr/src/app
+
+# Copia los archivos de definición de dependencias. 
+# Esto permite que Docker use la caché si solo cambian estos archivos.
+COPY package.json package-lock.json ./
+
+# Instala las dependencias. Utilizamos --only=production 
+# para no incluir dependencias de desarrollo en la imagen final.
+RUN npm install 
+
+# Copia el resto del código fuente de la aplicación al contenedor.
+# Asegúrate de que tu .gitignore excluya node_modules localmente.
+COPY . .
+
+# El backend probablemente usa un puerto como 3000, 5000 u 8080.
+# Expone el puerto donde escucha tu aplicación Node.js.
+EXPOSE 3002
+
+# Define el comando para ejecutar la aplicación al iniciar el contenedor.
+# Asumo que tienes un script 'start' en tu package.json.
+CMD ["npm", "run", "dev"]
