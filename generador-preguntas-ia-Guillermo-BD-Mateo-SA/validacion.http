@@ -1,0 +1,33 @@
+@baseURL = http://localhost
+@port = 3002
+
+@apiUrl = {{baseURL}}:{{port}}
+@contentType = application/json
+
+//endpoint health
+GET {{apiUrl}}/api/health
+Accept: @contentType
+
+//endpoint para obtener los temas
+GET {{apiUrl}}/api/temas
+
+//endpoint para generar una pregunta
+POST {{apiUrl}}/api/generate
+Content-Type: @contentType
+{
+  "tema": "javascript",
+  "numPreguntas": 4,
+  "subtema" : "promesas"
+}
+
+//obtener todas las preguntas
+GET {{apiUrl}}/api/preguntas
+
+//obtener una pregunta por id
+GET {{apiUrl}}/api/preguntas/1
+
+//borrar una pregunta por id
+DELETE {{apiUrl}}/api/preguntas/1
+
+//borrar las pregunta por un tema
+DELETE {{apiUrl}}/api/preguntas/tema/javascript

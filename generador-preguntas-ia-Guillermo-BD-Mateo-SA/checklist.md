@@ -11,10 +11,10 @@
 ## Frontend:
 - [x] hacer index.html (Guille)
 - [x] hacer style.css (Guille)
-- [ ] hacer main.js (Mateo)
+- [x] hacer main.js (Mateo)
 
 ## Misc: 
-- [ ] hacer validacion.http (Mateo)
+- [x] hacer validacion.http (Mateo)
 - [ ] hacer docker-compose.yml (Guille)
 
 ## Pruebas manuales:
