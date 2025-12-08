@@ -17,10 +17,14 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3002",
-        "http://127.0.0.1:3002",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://localhost:3002",
+      "http://127.0.0.1:3002",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      "http://localhost:8080",
+      "http://127.0.0.1:8080",
     ],
     credentials: true,
   })
@@ -28,7 +32,7 @@ app.use(
 
 app.use("/api", router);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

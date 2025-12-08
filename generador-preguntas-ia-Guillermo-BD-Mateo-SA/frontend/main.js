@@ -23,12 +23,12 @@ async function cargarTemas() {
       selectTema.appendChild(option);
     });
   } catch (error) {
-    console.error('Error al obtener los temas:', error);  
+    console.error('Error al obtener los temas:', error);
   }
 }
 
 //funcion generarPreguntas()
-const generarPreguntas = async () =>{
+const generarPreguntas = async () => {
   const tema = selectTema.value;
   const numPreguntas = parseInt(numeroSelector.value, 10);
 
@@ -40,7 +40,7 @@ const generarPreguntas = async () =>{
 
   indicadorCarga.hidden = false;
 
-  try{
+  try {
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -50,7 +50,7 @@ const generarPreguntas = async () =>{
     });
     const data = await response.json();
 
-    if(!data.success){
+    if (!data.success) {
       alert("Error al generar preguntas");
       indicadorCarga.hidden = true;
       return;
@@ -58,7 +58,7 @@ const generarPreguntas = async () =>{
 
     mostrarPreguntas(data.preguntas);
 
-  } catch(error){
+  } catch (error) {
     console.error('Error al generar preguntas:', error);
   }
 
@@ -66,7 +66,7 @@ const generarPreguntas = async () =>{
 }
 
 //funcion para mostrar las preguntas 
-function mostrarPreguntas(preguntas){
+function mostrarPreguntas(preguntas) {
   containerPreguntas.innerHTML = "";
 
   preguntas.forEach(p => {
@@ -82,7 +82,7 @@ function mostrarPreguntas(preguntas){
       li.textContent = op;
       lista.appendChild(li);
     });
-    
+
     const eliminar = document.createElement("button");
     eliminar.textContent = "Eliminar";
     eliminar.classList.add("btn");
@@ -102,7 +102,7 @@ function mostrarPreguntas(preguntas){
 //Funcion para eliminar la pregunta dado un id
 async function eliminarPregunta(id) {
   try {
-    await fetch(`/api/pregunta/${id}`, { method: "DELETE" });
+    await fetch(`/api/preguntas/${id}`, { method: "DELETE" });
     alert("La pregunta ha sido eliminada");
     preguntasAnteriores();
   } catch (error) {
@@ -112,12 +112,12 @@ async function eliminarPregunta(id) {
 }
 
 //creamos una funcion que mantiene la consistencia entre lo que hay en pantalla y lo que hay en la base de datos
-async function preguntasAnteriores(){
+async function preguntasAnteriores() {
   const tema = selectTema.value;
 
-  if(!tema) return;
+  if (!tema) return;
 
-  const res = await fetch(`/api/preguntas/tema/${tema}`);
+  const res = await fetch(`/api/preguntas?tema=${tema}`);
   const preguntas = await res.json();
 
   mostrarPreguntas(preguntas);
@@ -125,26 +125,26 @@ async function preguntasAnteriores(){
 
 //funcion limpiar
 async function limpiar() {
-    contenedorPreguntas.innerHTML = "";
-    inputNum.value = 3; 
+  containerPreguntas.innerHTML = "";
+  numeroSelector.value = 3;
 
-    const tema = selectTema.value;
-    if (!tema) return;
+  const tema = selectTema.value;
+  if (!tema) return;
 
-    try {
-        await fetch(`/api/preguntas/tema/${tema}`, { method: "DELETE" });
-        alert("Preguntas del tema eliminadas.");
-    } catch (error) {
-        alert("Error al limpiar preguntas.");
-        console.error(error);
-    }
+  try {
+    await fetch(`/api/preguntas/tema/${tema}`, { method: "DELETE" });
+    alert("Preguntas del tema eliminadas.");
+  } catch (error) {
+    alert("Error al limpiar preguntas.");
+    console.error(error);
+  }
 }
 
 //creamos los eventos que se escucharán
 generadorPreguntas.addEventListener('click', generarPreguntas);
 limpiarBoton.addEventListener('click', limpiar);
 selectTema.addEventListener('change', preguntasAnteriores);
-numeroSelector.addEventListener('input',()=>{
+numeroSelector.addEventListener('input', () => {
   const num = parseInt(numeroSelector.value, 10);
   if (num > 5) numeroSelector.value = 5;
   if (num < 1) numeroSelector.value = 1;
