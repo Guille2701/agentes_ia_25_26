@@ -1,29 +1,29 @@
 # ETAPA 1: Construcción de la imagen del Backend (Node.js)
 
-# Usa una imagen base de Node.js ligera para la aplicación.
-# Se recomienda usar una versión LTS (Long-Term Support) como 20-slim.
-FROM node:20-slim
+# Usamos la imagen completa de Node.js (v20) en lugar de slim 
+# porque 'better-sqlite3' requiere herramientas de compilación (Python, make, g++)
+# que no están presentes en la versión slim por defecto.
+FROM node:20
 
-# Etiqueta para mantener el código en orden (opcional, pero útil)
+# Etiqueta para mantener el código en orden
 LABEL stage=backend-prod
 
-# Crea y establece el directorio de trabajo dentro del contenedor.
+# Crea y establece el directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copia los archivos de definición de dependencias. 
-# Esto permite que Docker use la caché si solo cambian estos archivos.
-COPY package.json package-lock.json ./
+# Copia los archivos de dependencias
+COPY package*.json ./
 
-# Instala las dependencias. Utilizamos --only=production 
-# para no incluir dependencias de desarrollo en la imagen final.
-RUN npm install 
+# Instala las dependencias y reconstruye los módulos nativos si es necesario
+# Esto es CRÍTICO para asegurar que better-sqlite3 funcione en Linux/Docker
+RUN npm install
 
-# Copia el resto del código fuente de la aplicación al contenedor.
-# Asegúrate de que tu .gitignore excluya node_modules localmente.
+# Copia el resto del código fuente
+# NOTA: Asegúrate de tener un .dockerignore que excluya 'node_modules' 
+# para no copiar los módulos de Windows al contenedor Linux.
 COPY . .
 
-# El backend probablemente usa un puerto como 3000, 5000 u 8080.
-# Expone el puerto donde escucha tu aplicación Node.js.
+# Expone el puerto donde escucha la aplicación (3002 por defecto en tu código)
 EXPOSE 3002
 
 # Define el comando para ejecutar la aplicación al iniciar el contenedor.

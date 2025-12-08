@@ -15,7 +15,7 @@
 
 ## Misc: 
 - [x] hacer validacion.http (Mateo)
-- [ ] hacer docker-compose.yml (Guille)
+- [x] hacer docker-compose.yml (Guille)
 
 ## Pruebas manuales:
 - [ ] Backend levanta sin errores
