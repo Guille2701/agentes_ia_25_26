@@ -1,5 +1,5 @@
 //seleccionamos los elementos del DOM
-const selectTema = document.getElementById('tema');
+const selectTema = document.querySelector("#tema");
 const numeroSelector = document.getElementById('num');
 const generadorPreguntas = document.getElementById('generar-btn');
 const limpiarBoton = document.getElementById('limpiar-btn');
@@ -12,14 +12,14 @@ async function cargarTemas() {
   try {
     const response = await fetch('/api/temas');
     const temas = await response.json();
-
+    console.log(temas)
     // Limpiamos las opciones anteriores
     selectTema.innerHTML = '';
 
     temas.forEach(tema => {
       const option = document.createElement('option');
-      option.value = tema.id;
-      option.textContent = tema.nombre;
+      option.value = tema;
+      option.textContent = tema;
       selectTema.appendChild(option);
     });
   } catch (error) {
@@ -38,7 +38,8 @@ const generarPreguntas = async () => {
   if (isNaN(numPreguntas) || numPreguntas < 1 || numPreguntas > 5)
     return alert('Seleccione un numero de preguntas entre 1 y 5');
 
-  indicadorCarga.hidden = false;
+  // Show spinner by changing display style, overriding CSS
+  indicadorCarga.style.display = 'block';
 
   try {
     const response = await fetch("/api/generate", {
@@ -52,7 +53,7 @@ const generarPreguntas = async () => {
 
     if (!data.success) {
       alert("Error al generar preguntas");
-      indicadorCarga.hidden = true;
+      indicadorCarga.style.display = 'none';
       return;
     }
 
@@ -62,7 +63,7 @@ const generarPreguntas = async () => {
     console.error('Error al generar preguntas:', error);
   }
 
-  indicadorCarga.hidden = true;
+  indicadorCarga.style.display = 'none';
 }
 
 //funcion para mostrar las preguntas 
@@ -90,8 +91,13 @@ function mostrarPreguntas(preguntas) {
       eliminarPregunta(p.id);
     });
 
+    const respuesta = document.createElement("p");
+    respuesta.classList.add("respuesta");
+    respuesta.innerHTML = `<strong>Respuesta Correcta:</strong> ${p.correcta}`;
+
     card.appendChild(titulo);
     card.appendChild(lista);
+    card.appendChild(respuesta);
     card.appendChild(eliminar);
 
     containerPreguntas.appendChild(card);
@@ -150,5 +156,5 @@ numeroSelector.addEventListener('input', () => {
   if (num < 1) numeroSelector.value = 1;
 })
 
-cargarTemas();
-preguntasAnteriores();
+await cargarTemas();
+await preguntasAnteriores();
