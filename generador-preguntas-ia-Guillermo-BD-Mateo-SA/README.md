@@ -138,3 +138,36 @@ router.delete("/preguntas/tema/:tema", (req, res) => {
 });
 ```
 Este último método nos permite eliminar las preguntas con un nombre común en su totalidad de la base de datos. 
+
+## Casos de Uso
+
+Los casos de uso de este proyecto se dividen en dos categorías principales: **Funcionalidades de Consulta** (lectura de datos) y **Funcionalidades de Escritura/Generación** (modificación y creación de datos). El actor principal es el **Sistema Frontend**, que interactúa con el **Backend API** para satisfacer las necesidades del **Usuario Final (Profesor)**.
+
+### I. Casos de Uso de Consulta y Estado
+
+Estos casos de uso se enfocan en obtener información sobre el estado del servicio y el contenido existente.
+
+| Caso de Uso | Actor | API Endpoint (Método) | Descripción |
+| :--- | :--- | :--- | :--- |
+| **1. Verificar Estado del Servicio** | Sistema Cliente | `/api/health` (`GET`) | Permite al Frontend verificar rápidamente si la API, Ollama (IA) y la Base de Datos están operando correctamente antes de intentar otras operaciones. |
+| **2. Mostrar Temas Disponibles** | Sistema Cliente | `/api/temas` (`GET`) | El Frontend llama a este *endpoint* para obtener el listado de temas (tecnologías) que pueden ser usados para generar o filtrar preguntas. |
+| **3. Consultar Banco de Preguntas** | Sistema Cliente | `/api/preguntas?tema=` (`GET`) | Obtener una lista de todas las preguntas almacenadas en la base de datos, con la opción de filtrar por un tema específico (ej: JavaScript). |
+| **4. Visualizar Pregunta Específica** | Sistema Cliente | `/api/preguntas/:id` (`GET`) | Permite al Frontend cargar los detalles de una pregunta concreta, útil para la edición o visualización individual. |
+
+### II. Casos de Uso de Generación y Gestión de Contenido
+
+Estos casos de uso involucran la creación de nuevas preguntas mediante la IA y la gestión del banco de datos (CRUD).
+
+| Caso de Uso | Actor | API Endpoint (Método) | Descripción |
+| :--- | :--- | :--- | :--- |
+| **5. Generar y Almacenar Preguntas** | Sistema Cliente / IA | `/api/generate` (`POST`) | **Caso de uso principal.** El Frontend envía los parámetros de configuración (tema, subtema, cantidad de preguntas, opciones) al *backend*. El *backend* interactúa con Ollama (Mistral) para generar el contenido y lo almacena en SQLite3. |
+| **6. Eliminar Pregunta Individual** | Sistema Cliente | `/api/preguntas/:id` (`DELETE`) | Permite al Usuario (vía Frontend) retirar una pregunta específica del banco de datos. |
+| **7. Limpiar un Tema Completo** | Sistema Cliente | `/api/preguntas/tema/:tema` (`DELETE`) | Permite al Usuario vaciar el banco de preguntas asociadas a una tecnología completa (ej: eliminar todas las preguntas de SQL). |
+
+### Flujo Típico de Uso (Generación)
+
+1.  El **Sistema Cliente** ejecuta el **Caso de Uso 1** (`/api/health`) para confirmar la disponibilidad.
+2.  El **Sistema Cliente** ejecuta el **Caso de Uso 2** (`/api/temas`) para mostrar las opciones al usuario.
+3.  El **Usuario** selecciona un tema y define la cantidad de preguntas y opciones.
+4.  El **Sistema Cliente** inicia el **Caso de Uso 5** (`/api/generate`), esperando la respuesta de la IA.
+5.  Una vez generadas, el **Sistema Cliente** puede usar el **Caso de Uso 3** (`/api/preguntas`) para mostrar las nuevas preguntas almacenadas en la interfaz.
