@@ -75,7 +75,7 @@ Nuestro segundo endpoint es /api/temas
 
 ```JavaScript
 router.get("/temas", (req, res) => {
-  res.json(getTemas());
+  res.json(services().getTemas());
 });
 ```
 Este método nos muestra los temas que hay en la base de datos para ser utilizados.
@@ -105,13 +105,13 @@ El quinto endpoint que hemos creado es /api/generate con el siguiente método
 ```JavaScript
 router.post("/generate", async (req, res) => {
   try {
-    const { tema, numPreguntas, subtema } = req.body;
+    const { tema, numPreguntas, numOpciones, subtema } = req.body;
 
     if (!tema || !numPreguntas) {
       return res.status(400).json({ success: false, error: "Datos incompletos." });
     }
 
-    const preguntas = await services().generarPreguntas(tema, numPreguntas, subtema);
+    const preguntas = await services().generarPreguntas(tema, numPreguntas, numOpciones, subtema);
 
     res.json({ success: true, preguntas });
   } catch (err) {
