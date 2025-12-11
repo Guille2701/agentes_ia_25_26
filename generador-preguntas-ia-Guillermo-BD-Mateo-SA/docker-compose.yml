@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------
+  # 1. SERVICIO DE OLLAMA (Modelo de Lenguaje Local)
+  # ----------------------------------------------------------------
+  ollama:
+    image: ollama/ollama
+    container_name: ollama-ai-model
+    # Expone el puerto por defecto de Ollama al host
+    ports:
+      - "11434:11434"
+    # Persistencia de modelos
+    volumes:
+      - ollama_data:/root/.ollama
+    command: serve
+    restart: unless-stopped
+    networks:
+      - app-net
+      
+  # ----------------------------------------------------------------
+  # 2. SERVICIO DE BACKEND (Node.js) - PUERTO 3002
+  # ----------------------------------------------------------------
+  backend:
+    # Construye la imagen usando el Dockerfile de la carpeta 'backend'
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: preguntas-backend
+    # Mapeo de Puertos ACTUALIZADO: 
+    # Mapea el puerto 3002 del contenedor (el puerto de escucha del backend)
+    # al puerto 3002 del host (para acceder a la API desde tu máquina)
+    ports:
+      - "3000:3002" 
+    
+    # Depende de Ollama
+    depends_on:
+      - ollama
+    
+    # Variables de Entorno para la comunicación con Ollama
+    environment:
+      OLLAMA_URL: "http://ollama"
+      OLLAMA_PORT: "11434"
+      OLLAMA_MODEL: "mistral"
+      
+    restart: unless-stopped
+    networks:
+      - app-net
+
+  # ----------------------------------------------------------------
+  # 3. SERVICIO DE FRONTEND (Nginx)
+  # ----------------------------------------------------------------
+  frontend:
+    # Construye la imagen usando el Dockerfile de la carpeta 'frontend'
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: preguntas-frontend
+    # Mapea un puerto (ej: 8080) del host al puerto 80 del contenedor (el de Nginx)
+    ports:
+      - "8080:80"
+    # El frontend depende del backend
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app-net
+
+# ----------------------------------------------------------------
+# VOLÚMENES Y REDES
+# ----------------------------------------------------------------
+volumes:
+  # Volumen para persistir los modelos de Ollama
+  ollama_data:
+
+# Red interna que permite la comunicación entre los servicios por su nombre
+networks:
+  app-net:
+    driver: bridge
