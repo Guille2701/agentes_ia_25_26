@@ -6,7 +6,7 @@ export default function services() {
     const OLLAMA_PORT = process.env.OLLAMA_PORT || "11434";
     const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "mistral:latest";
 
-    async function generarPreguntas(tema, num_preguntas = 2, subtema = "general", num_opciones = 4) {
+    async function generarPreguntas(tema, num_preguntas = 3, subtema = "general", num_opciones = 4) {
         const temaBuscar = temas.find(t => t.id === tema);
         if (!temaBuscar) {
             throw new Error('Tema no encontrado');
