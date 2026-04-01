@@ -1,0 +1,311 @@
+/*
+  ==================================================
+  Estilos Generales y Tipografía
+  ==================================================
+*/
+:root {
+  --color-primary: #007bff; /* Azul vibrante */
+  --color-secondary: #6c757d; /* Gris para texto secundario */
+  --color-success: #28a745; /* Verde para éxito/limpiar */
+  --color-danger: #dc3545; /* Rojo para errores */
+  --color-warning: #ffc107; /* Amarillo/Naranja para advertencia/input */
+  --color-background: #f4f7f6; /* Fondo suave */
+  --color-card-bg: #ffffff; /* Fondo de tarjeta */
+  --color-text-dark: #343a40; /* Texto principal oscuro */
+  --font-family-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --max-width: 800px;
+  --spacing-unit: 1rem;
+}
+
+/* <body>: Fondo, Familia de Fuentes, Márgenes */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-main);
+  background-color: var(--color-background);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+}
+
+/* Contenedor Principal: Centrado, Ancho Máximo */
+.container {
+  max-width: var(--max-width);
+  margin: 2rem auto; /* Centrado horizontal, margen superior/inferior */
+  padding: var(--spacing-unit);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--color-secondary);
+  padding-bottom: 1rem;
+}
+
+/*
+  ==================================================
+  Estilos de Formularios y Controles
+  ==================================================
+*/
+.controls {
+  display: flex;
+  gap: var(--spacing-unit);
+  align-items: flex-end; /* Asegura alineación vertical de elementos */
+  background-color: var(--color-card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra suave */
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* Permite que los controles se envuelvan en móvil */
+}
+
+/* Estilo base para etiquetas de formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Permite que crezcan para llenar el espacio */
+  min-width: 150px; /* Ancho mínimo para cada grupo */
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-dark);
+}
+
+/* Estilo base para inputs y selects */
+select,
+input[type="number"] {
+  padding: 0.75rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: var(--color-card-bg);
+}
+
+/* Select de Tema: Dropdown con Estilos */
+#tema-selector {
+  /* No se necesita un estilo específico más allá del base,
+     ya que el navegador maneja la apariencia del dropdown.
+     Pero le damos un enfoque visual distintivo. */
+}
+#tema-selector:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Input de Números: Validación Visual */
+#num-preguntas {
+  /* Estilo visual para indicar el rango válido (1-5) */
+  border-left: 5px solid var(--color-warning); /* Barra de color a la izquierda */
+}
+
+#num-preguntas:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* **Validación visual para valores fuera de rango (si la lógica JS lo añade como clase)** */
+input[type="number"]:invalid,
+input[type="number"].is-invalid {
+  border-color: var(--color-danger) !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+
+/*
+  ==================================================
+  Estilos de Botones
+  ==================================================
+*/
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+  white-space: nowrap; /* Evita que el texto se envuelva */
+}
+
+/* Botón Generar Preguntas */
+#generar-btn {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Botón Limpiar */
+#limpiar-btn {
+  background-color: var(--color-success);
+  color: white;
+}
+
+/* Botones: Estado Hover y Active */
+.btn:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px); /* Efecto de "presión" */
+}
+
+/* Botones: Estado Disabled */
+.btn:disabled {
+  background-color: var(--color-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/*
+  ==================================================
+  Indicador de Carga y Errores
+  ==================================================
+*/
+
+/* Indicador de Carga: Texto "Generando..." */
+#loading-indicator {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  margin-top: 1rem;
+  display: none; /* Inicialmente oculto, JS lo muestra */
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Indicador de Carga: Spinner (CSS puro) */
+.spinner {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 3px solid rgba(0, 123, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: spin 1s ease-in-out infinite;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Estado de Error: Texto rojo, Icono */
+.error-message {
+  color: var(--color-danger); /* Texto rojo */
+  background-color: #f8d7da; /* Fondo de alerta suave */
+  border: 1px solid var(--color-danger);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.error-message::before {
+  content: '⚠️'; /* Icono de advertencia */
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+
+/*
+  ==================================================
+  Contenedor y Tarjetas de Preguntas
+  ==================================================
+*/
+
+/* Contenedor de Preguntas */
+#preguntas-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Columna única por defecto */
+  gap: 1.5rem; /* Espaciado entre tarjetas */
+}
+
+/* Pregunta Individual: Claro, Legible, Espaciado (Tarjetas con Sombra) */
+.pregunta-card {
+  background-color: var(--color-card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+  transition: transform 0.3s;
+}
+
+.pregunta-card:hover {
+  transform: translateY(-2px); /* Pequeño levantamiento en hover */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pregunta-card h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.pregunta-card p {
+  margin-bottom: 0.5rem;
+}
+
+.pregunta-card strong {
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+/* Estilos específicos para la respuesta */
+.respuesta {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #f1f1f1;
+  border-left: 4px solid var(--color-success);
+  border-radius: 4px;
+}
+
+
+/*
+  ==================================================
+  Responsividad (Media Queries)
+  ==================================================
+*/
+
+/* Media Query para Dispositivos Móviles (ancho máximo 600px) */
+@media (max-width: 600px) {
+  /* Reducir margen del contenedor principal */
+  .container {
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+
+  /* Ajustar controles para la pila vertical */
+  .controls {
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: stretch; /* Estirar elementos al ancho completo */
+    padding: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  /* Asegurar que los botones ocupen el ancho completo */
+  .btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* Reducir tamaño de fuente en tarjetas */
+  .pregunta-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .pregunta-card {
+    padding: 1rem;
+  }
+}

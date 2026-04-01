@@ -1,0 +1,120 @@
+# ============================================================
+# Infraestructura de proyecto: Sistema de Incidencias DAW + Telegram
+# Servicios:
+#   - ngrok: Túnel seguro para recibir Webhooks de Telegram
+#   - n8n: Motor de automatización (con persistencia de datos)
+#   - PostgreSQL: Base de datos principal para las incidencias
+#   - pgAdmin: Interfaz web de administración de base de datos
+# Red:
+#   - red-n8n-ollama (Red externa compartida con Ollama)
+# ============================================================
+
+services:
+  # ------------------------------------------------------------
+  # Servicio: ngrok
+  # Expone el puerto 5678 de n8n a internet con un dominio fijo
+  # ------------------------------------------------------------
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok
+    restart: unless-stopped
+    ports:
+      - "4040:4040" # Panel de métricas local
+    environment:
+      - NGROK_AUTHTOKEN=39ZCaSV18lrgKMi2UvD6ZIUMg75_4Ve7dc8WKhjzkaHzNqWAv
+    # Comando para usar el dominio estático reclamado
+    command: http --domain=carbonous-lynsey-mercenarily.ngrok-free.dev n8n:5678
+    networks:
+      - red-n8n-ollama
+
+  # ------------------------------------------------------------
+  # Servicio: n8n
+  # Automatización configurada para recibir tráfico desde ngrok
+  # ------------------------------------------------------------
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_USER_FOLDER=/home/node/.n8n
+      # URL pública necesaria para que los nodos de Telegram funcionen
+      - WEBHOOK_URL=https://carbonous-lynsey-mercenarily.ngrok-free.dev/
+      - N8N_ELASTICBEANSTALK_SSL=true
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - N8N_TELEMETRY_ENABLED=false
+
+
+
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - red-n8n-ollama
+
+  # ------------------------------------------------------------
+  # Servicio: PostgreSQL
+  # Base de datos donde se guardarán las incidencias
+  # ------------------------------------------------------------
+  postgres:
+    image: postgres:16
+    container_name: postgres_incidencias
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: incidencias_db
+      POSTGRES_USER: incidencias_admin
+      POSTGRES_PASSWORD: "Curso-n8n!"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - red-n8n-ollama
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U incidencias_admin -d incidencias_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ------------------------------------------------------------
+  # Servicio: pgAdmin
+  # Interfaz web para administrar PostgreSQL desde navegador
+  # ------------------------------------------------------------
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_incidencias
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: bazann8n@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: "Curso-n8n!"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - red-n8n-ollama
+    depends_on:
+      - postgres
+
+# ------------------------------------------------------------
+# Definición de redes
+# ------------------------------------------------------------
+networks:
+  red-n8n-ollama:
+    external: true
+
+# ------------------------------------------------------------
+# Definición de volúmenes persistentes
+# ------------------------------------------------------------
+volumes:
+  # Volumen externo (donde ya tienes tus workflows de n8n)
+  n8n_data:
+    external: true
+
+  # Volúmenes locales para la base de datos de incidencias
+  postgres_data:
+  pgadmin_data:
+
+
+# ------------------------------------------------------------
+# By Isaías Fdez Lozano https://github.com/isaiasfl
+# ------------------------------------------------------------
